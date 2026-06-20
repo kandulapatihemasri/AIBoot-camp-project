@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Apex Academy Student Registration Portal. Register students, generate digital ID cards, and manage records in a clean, modern interface.">
+    <title>Apex Academy | Student Registration Portal</title>
+    <!-- Lucide Icons Font -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Defer JS logic for optimal rendering -->
+    <script src="app.js" defer></script>
+</head>
+<body>
+
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar" id="sidebar">
+        <div class="brand">
+            <div class="brand-icon">
+                <i data-lucide="graduation-cap"></i>
+            </div>
+            <span class="brand-name">Apex Academy</span>
+        </div>
+
+        <ul class="nav-list">
+            <li class="nav-item active" data-page="dashboard">
+                <a href="#dashboard">
+                    <i data-lucide="layout-dashboard"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li class="nav-item" data-page="register">
+                <a href="#register">
+                    <i data-lucide="user-plus"></i>
+                    <span>Register Student</span>
+                </a>
+            </li>
+            <li class="nav-item" data-page="directory">
+                <a href="#directory">
+                    <i data-lucide="users"></i>
+                    <span>Student Directory</span>
+                </a>
+            </li>
+        </ul>
+
+        <div class="sidebar-footer">
+            <button class="theme-toggle-btn" id="theme-toggle">
+                <span id="theme-text">Dark Mode</span>
+                <i data-lucide="moon" id="theme-icon"></i>
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Workspace Wrapper -->
+    <div class="main-wrapper">
+        <!-- Header -->
+        <header>
+            <div style="display: flex; align-items: center; gap: 1rem;">
+                <button class="hamburger-btn" id="hamburger-toggle" aria-label="Toggle Navigation Menu">
+                    <i data-lucide="menu"></i>
+                </button>
+                <div class="header-title-container">
+                    <h2 id="page-title">Dashboard Overview</h2>
+                    <p id="page-subtitle">Welcome back, Administrator</p>
+                </div>
+            </div>
+            <div class="header-actions">
+                <span style="font-size: 0.85rem; font-weight: 500; color: var(--text-secondary);" id="current-date">Saturday, June 20, 2026</span>
+                <div class="avatar-circle" title="Admin Profile">AD</div>
+            </div>
+        </header>
+
+        <!-- Main Content Area -->
+        <main class="content-container">
+
+            <!-- 1. DASHBOARD OVERVIEW SECTION -->
+            <section class="section-panel active" id="page-dashboard">
+                <!-- Welcome Banner -->
+                <div class="welcome-banner">
+                    <h1>Student Registration Portal</h1>
+                    <p>Manage applications, register new students, generate custom Digital ID Cards instantly, and track academic enrollment stats across departments.</p>
+                </div>
+
+                <!-- Statistics Widgets -->
+                <div class="stats-grid">
+                    <div class="glass-card stat-card stat-total">
+                        <div class="stat-icon-wrapper">
+                            <i data-lucide="users"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="stat-total-count">0</h3>
+                            <p>Total Registered</p>
+                        </div>
+                    </div>
+                    <div class="glass-card stat-card stat-cs">
+                        <div class="stat-icon-wrapper">
+                            <i data-lucide="code"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="stat-cs-count">0</h3>
+                            <p>Computer Science</p>
+                        </div>
+                    </div>
+                    <div class="glass-card stat-card stat-eng">
+                        <div class="stat-icon-wrapper">
+                            <i data-lucide="cpu"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="stat-eng-count">0</h3>
+                            <p>Engineering</p>
+                        </div>
+                    </div>
+                    <div class="glass-card stat-card stat-bus">
+                        <div class="stat-icon-wrapper">
+                            <i data-lucide="briefcase"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="stat-bus-count">0</h3>
+                            <p>Business Admin</p>
+                        </div>
+                    </div>
+                    <div class="glass-card stat-card stat-art">
+                        <div class="stat-icon-wrapper">
+                            <i data-lucide="palette"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="stat-art-count">0</h3>
+                            <p>Creative Arts</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dashboard Layout Widgets -->
+                <div class="dashboard-layout">
+                    <!-- Dynamic SVG/CSS Bar Chart Card -->
+                    <div class="glass-card">
+                        <div class="dashboard-panel-header">
+                            <h3><i data-lucide="bar-chart-3" style="color: var(--primary);"></i> Department Enrollment</h3>
+                            <span style="font-size: 0.8rem; font-weight: 500; color: var(--text-muted);">Real-time allocation</span>
+                        </div>
+                        <div class="chart-container">
+                            <div class="chart-visual-mock" id="dashboard-chart">
+                                <div class="chart-bar-col">
+                                    <div class="chart-bar" style="height: 0%; background: var(--dept-cs-grad);" id="chart-bar-cs" data-val="0"></div>
+                                    <span class="chart-label">CS</span>
+                                </div>
+                                <div class="chart-bar-col">
+                                    <div class="chart-bar" style="height: 0%; background: var(--dept-eng-grad);" id="chart-bar-eng" data-val="0"></div>
+                                    <span class="chart-label">Eng</span>
+                                </div>
+                                <div class="chart-bar-col">
+                                    <div class="chart-bar" style="height: 0%; background: var(--dept-bus-grad);" id="chart-bar-bus" data-val="0"></div>
+                                    <span class="chart-label">Bus</span>
+                                </div>
+                                <div class="chart-bar-col">
+                                    <div class="chart-bar" style="height: 0%; background: var(--dept-art-grad);" id="chart-bar-art" data-val="0"></div>
+                                    <span class="chart-label">Art</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Sign-ups Widget -->
+                    <div class="glass-card">
+                        <div class="dashboard-panel-header">
+                            <h3><i data-lucide="clock" style="color: var(--warning);"></i> Recent Sign-ups</h3>
+                            <a href="#directory" onclick="switchPage('directory')" style="font-size: 0.8rem; font-weight: 600; color: var(--primary); text-decoration: none;">View All</a>
+                        </div>
+                        <div class="recent-list" id="recent-registrations-list">
+                            <!-- Populated dynamically via JS -->
+                            <div class="empty-state" style="padding: 1.5rem 0;">
+                                <p style="font-size: 0.85rem; margin-bottom: 0;">No registrations yet. Add a student to get started!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+            <!-- 2. REGISTRATION WIZARD & ID GENERATOR SECTION -->
+            <section class="section-panel" id="page-register">
+                <div class="wizard-container">
+                    
+                    <!-- Left Column: Stepper and Wizard Form -->
+                    <div>
+                        <!-- Stepper Progress -->
+                        <div class="stepper">
+                            <div class="stepper-progress" id="wizard-progress-bar"></div>
+                            
+                            <div class="step active" id="step-node-1">
+                                <div class="step-circle">1</div>
+                                <span class="step-label">Personal</span>
+                            </div>
+                            <div class="step" id="step-node-2">
+                                <div class="step-circle">2</div>
+                                <span class="step-label">Academic</span>
+                            </div>
+                            <div class="step" id="step-node-3">
+                                <div class="step-circle">3</div>
+                                <span class="step-label">Preferences</span>
+                            </div>
+                            <div class="step" id="step-node-4">
+                                <div class="step-circle">4</div>
+                                <span class="step-label">Review</span>
+                            </div>
+                        </div>
+
+                        <!-- Registration Form Card -->
+                        <div class="glass-card wizard-form-card">
+                            <form id="student-registration-form" novalidate>
+                                
+                                <!-- STEP 1: PERSONAL INFO -->
+                                <div class="form-step-content active" id="form-step-1">
+                                    <h3 style="margin-bottom: 0.5rem;"><i data-lucide="user" style="color: var(--primary); vertical-align: middle; margin-right: 0.25rem;"></i> Personal Profile</h3>
+                                    <p style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 1.25rem;">Enter the student's personal credentials and select a profile image.</p>
+                                    
+                                    <div class="form-group">
+                                        <label for="reg-fullname">Full Name *</label>
+                                        <input type="text" id="reg-fullname" placeholder="John Doe" required autocomplete="name">
+                                        <span class="error-message" id="err-fullname">Full Name is required (letters & spaces only)</span>
+                                    </div>
+                                    
+                                    <div class="form-grid-2">
+                                        <div class="form-group">
+                                            <label for="reg-email">Email Address *</label>
+                                            <input type="email" id="reg-email" placeholder="johndoe@email.com" required autocomplete="email">
+                                            <span class="error-message" id="err-email">Please enter a valid email address</span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="reg-phone">Phone Number *</label>
+                                            <input type="tel" id="reg-phone" placeholder="9876543210" required autocomplete="tel">
+                                            <span class="error-message" id="err-phone">Enter a valid 10-digit phone number</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-grid-2">
+                                        <div class="form-group">
+                                            <label for="reg-dob">Date of Birth *</label>
+                                            <input type="date" id="reg-dob" required>
+                                            <span class="error-message" id="err-dob">Please choose a valid birth date</span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="reg-gender">Gender *</label>
+                                            <select id="reg-gender" required>
+                                                <option value="" disabled selected>Select gender</option>
+                                                <option value="Male">Male</option>
+                                                <option value="Female">Female</option>
+                                                <option value="Other">Other</option>
+                                            </select>
+                                            <span class="error-message" id="err-gender">Please select gender</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Avatar Selection / Image Upload -->
+                                    <div class="avatar-selection-container">
+                                        <label style="font-size: 0.85rem; font-weight: 600; color: var(--text-secondary);">Profile Avatar *</label>
+                                        <div class="avatar-options">
+                                            <!-- Standard placeholder avatars -->
+                                            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=150" class="avatar-option-img selected" data-avatar-idx="1" alt="Avatar 1">
+                                            <img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&q=80&w=150" class="avatar-option-img" data-avatar-idx="2" alt="Avatar 2">
+                                            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=150" class="avatar-option-img" data-avatar-idx="3" alt="Avatar 3">
+                                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=150" class="avatar-option-img" data-avatar-idx="4" alt="Avatar 4">
+                                            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=150" class="avatar-option-img" data-avatar-idx="5" alt="Avatar 5">
+                                            
+                                            <!-- File upload button for custom avatar -->
+                                            <div class="file-upload-wrapper">
+                                                <div class="file-upload-btn">
+                                                    <i data-lucide="upload" style="width: 14px; height: 14px; margin-right: 0.25rem; vertical-align: middle;"></i> Custom Image
+                                                </div>
+                                                <input type="file" id="reg-avatar-file" accept="image/*">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- STEP 2: ACADEMIC PROGRAM -->
+                                <div class="form-step-content" id="form-step-2">
+                                    <h3 style="margin-bottom: 0.5rem;"><i data-lucide="book-open" style="color: var(--primary); vertical-align: middle; margin-right: 0.25rem;"></i> Academic Program</h3>
+                                    <p style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 1.25rem;">Choose the department, primary course of study, and enrollment parameters.</p>
+
+                                    <div class="form-group">
+                                        <label for="reg-department">Academic Department *</label>
+                                        <select id="reg-department" required>
+                                            <option value="" disabled selected>Select Department</option>
+                                            <option value="cs">Computer Science & AI</option>
+                                            <option value="engineering">Engineering</option>
+                                            <option value="business">Business Administration</option>
+                                            <option value="arts">Creative Arts</option>
+                                        </select>
+                                        <span class="error-message" id="err-department">Department is required</span>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="reg-course">Specialized Course *</label>
+                                        <select id="reg-course" required disabled>
+                                            <option value="" disabled selected>Choose department first</option>
+                                        </select>
+                                        <span class="error-message" id="err-course">Please select a course</span>
+                                    </div>
+
+                                    <div class="form-grid-2">
+                                        <div class="form-group">
+                                            <label for="reg-semester">Academic Term/Semester *</label>
+                                            <select id="reg-semester" required>
+                                                <option value="" disabled selected>Select term</option>
+                                                <option value="Semester 1">Semester 1 (Freshman)</option>
+                                                <option value="Semester 3">Semester 3 (Sophomore)</option>
+                                                <option value="Semester 5">Semester 5 (Junior)</option>
+                                                <option value="Semester 7">Semester 7 (Senior)</option>
+                                            </select>
+                                            <span class="error-message" id="err-semester">Term selection is required</span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="reg-type">Enrollment Type *</label>
+                                            <select id="reg-type" required>
+                                                <option value="Full-Time" selected>Full-Time</option>
+                                                <option value="Part-Time">Part-Time</option>
+                                                <option value="Distance Learning">Distance Learning</option>
+                                            </select>
+                                            <span class="error-message" id="err-type">Please select enrollment type</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- STEP 3: PREFERENCES & DECLARATION -->
+                                <div class="form-step-content" id="form-step-3">
+                                    <h3 style="margin-bottom: 0.5rem;"><i data-lucide="sliders" style="color: var(--primary); vertical-align: middle; margin-right: 0.25rem;"></i> Preferences & Options</h3>
+                                    <p style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 1.25rem;">Select additional facility requirements and provide formal declarations.</p>
+
+                                    <div class="form-group" style="gap: 0.85rem;">
+                                        <label style="font-size: 0.85rem; font-weight: 600; color: var(--text-secondary);">Additional Facilities</label>
+                                        
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" id="pref-hostel">
+                                            <span>Require Campus Hostel/Housing Accommodation</span>
+                                        </label>
+                                        
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" id="pref-scholarship">
+                                            <span>Apply for Merit-Based Scholarship Support</span>
+                                        </label>
+                                        
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" id="pref-sports">
+                                            <span>Enroll in Athletics & Extracurricular Clubs</span>
+                                        </label>
+                                    </div>
+
+                                    <div class="form-group" style="margin-top: 1.5rem;">
+                                        <label style="font-weight: 600;">Self-Declaration *</label>
+                                        <label class="checkbox-label" style="align-items: flex-start;">
+                                            <input type="checkbox" id="pref-declaration" required style="margin-top: 2px;">
+                                            <span style="font-size: 0.8rem; line-height: 1.4;">I hereby declare that all files and statements provided in this application are authentic and correct to the best of my knowledge. *</span>
+                                        </label>
+                                        <span class="error-message" id="err-declaration">You must check the self-declaration to proceed</span>
+                                    </div>
+                                </div>
+
+                                <!-- STEP 4: REVIEW & CONFIRMATION -->
+                                <div class="form-step-content" id="form-step-4">
+                                    <h3 style="margin-bottom: 0.5rem;"><i data-lucide="check-check" style="color: var(--success); vertical-align: middle; margin-right: 0.25rem;"></i> Review Details</h3>
+                                    <p style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 1rem;">Verify all details prior to completing the submission database transaction.</p>
+                                    
+                                    <div class="summary-review" id="summary-review-list">
+                                        <!-- Will populate dynamically -->
+                                    </div>
+                                </div>
+
+                                <!-- Stepper Form Navigation buttons -->
+                                <div class="form-actions">
+                                    <button type="button" class="btn btn-secondary" id="btn-wizard-prev" disabled>
+                                        <i data-lucide="arrow-left" style="width: 16px; height: 16px;"></i> Back
+                                    </button>
+                                    <button type="button" class="btn btn-primary" id="btn-wizard-next">
+                                        Next <i data-lucide="arrow-right" style="width: 16px; height: 16px;"></i>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Interactive Digital Student ID Card Live Preview -->
+                    <div class="preview-panel">
+                        <div class="preview-panel-title">
+                            <i data-lucide="badge-check" style="color: var(--success);"></i>
+                            <span>Live Student ID Generator</span>
+                        </div>
+
+                        <!-- Card Element -->
+                        <div class="id-card-wrapper">
+                            <div class="id-card theme-cs" id="interactive-id-card">
+                                <div class="id-card-header">
+                                    <div class="id-card-logo">
+                                        <i data-lucide="graduation-cap"></i> Apex Academy
+                                    </div>
+                                    <div class="id-card-subtitle">Digital Student ID</div>
+                                </div>
+
+                                <div class="id-card-body">
+                                    <div class="id-card-avatar-container">
+                                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=150" alt="Student Photo" class="id-card-avatar" id="id-preview-avatar">
+                                        <div class="id-card-badge" id="id-preview-type">Full-Time</div>
+                                    </div>
+
+                                    <div class="id-card-name" id="id-preview-name">John Doe</div>
+                                    <div class="id-card-id" id="id-preview-id">STU-2026-0000</div>
+
+                                    <div class="id-card-details">
+                                        <div class="id-detail-item">
+                                            <span class="id-detail-label">Department</span>
+                                            <span class="id-detail-value" id="id-preview-dept">Computer Science</span>
+                                        </div>
+                                        <div class="id-detail-item">
+                                            <span class="id-detail-label">Course</span>
+                                            <span class="id-detail-value" id="id-preview-course">B.Sc AI & Robotics</span>
+                                        </div>
+                                        <div class="id-detail-item">
+                                            <span class="id-detail-label">Valid Until</span>
+                                            <span class="id-detail-value" id="id-preview-valid">Dec 2029</span>
+                                        </div>
+                                        <div class="id-detail-item" style="text-align: right;">
+                                            <span class="id-detail-label">Blood Group</span>
+                                            <span class="id-detail-value">O +ve</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="id-card-footer">
+                                    <div class="id-barcode" title="Student ID Barcode">
+                                        <div class="id-barcode-lines"></div>
+                                    </div>
+                                    <div class="id-qr" title="Student Profile QR Code">
+                                        <div class="id-qr-box"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card Help tips -->
+                        <div style="text-align: center; margin-top: 1rem; font-size: 0.8rem; color: var(--text-muted); display: flex; align-items: center; justify-content: center; gap: 0.35rem;">
+                            <i data-lucide="info" style="width: 14px; height: 14px;"></i>
+                            <span>Card changes theme dynamically with department choices</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+            <!-- 3. STUDENT DIRECTORY (DATABASE LIST/GRID) SECTION -->
+            <section class="section-panel" id="page-directory">
+                
+                <!-- Search and Filter actions -->
+                <div class="directory-actions">
+                    <div class="search-filter-box">
+                        <!-- Search text -->
+                        <div class="search-input-wrapper">
+                            <i data-lucide="search"></i>
+                            <input type="text" id="dir-search-input" placeholder="Search by name, ID or email...">
+                        </div>
+                        
+                        <!-- Filter Department -->
+                        <select class="filter-select" id="dir-filter-dept">
+                            <option value="">All Departments</option>
+                            <option value="cs">Computer Science</option>
+                            <option value="engineering">Engineering</option>
+                            <option value="business">Business Admin</option>
+                            <option value="arts">Creative Arts</option>
+                        </select>
+                        
+                        <!-- Filter Enrollment Type -->
+                        <select class="filter-select" id="dir-filter-type">
+                            <option value="">All Types</option>
+                            <option value="Full-Time">Full-Time</option>
+                            <option value="Part-Time">Part-Time</option>
+                            <option value="Distance Learning">Distance Learning</option>
+                        </select>
+                    </div>
+
+                    <!-- Layout toggle & Export controls -->
+                    <div style="display: flex; gap: 0.75rem; align-items: center;">
+                        <button class="btn btn-secondary" style="padding: 0.65rem 1rem;" id="btn-export-csv" title="Export database to CSV file">
+                            <i data-lucide="download" style="width: 15px; height: 15px;"></i> Export CSV
+                        </button>
+                        
+                        <div class="view-toggles">
+                            <button class="view-toggle-btn active" id="btn-view-grid" title="Grid View" aria-label="Grid View">
+                                <i data-lucide="grid"></i>
+                            </button>
+                            <button class="view-toggle-btn" id="btn-view-list" title="List View" aria-label="List View">
+                                <i data-lucide="list"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Active Student Records output -->
+                <div class="directory-content" id="dir-results-container">
+                    <!-- Grid View Grid Container -->
+                    <div class="student-grid" id="directory-grid-layout">
+                        <!-- Populated by JS -->
+                    </div>
+
+                    <!-- List View Table Container (hidden initially) -->
+                    <div class="student-table-container" id="directory-list-layout" style="display: none;">
+                        <table class="student-table">
+                            <thead>
+                                <tr>
+                                    <th>Student Details</th>
+                                    <th>Student ID</th>
+                                    <th>Department</th>
+                                    <th>Specialization</th>
+                                    <th>Term</th>
+                                    <th>Enrollment</th>
+                                    <th style="text-align: right;">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="directory-table-body">
+                                <!-- Populated by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- TOAST NOTIFICATIONS POPUPS -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <!-- DIGITAL ID CARD PRINT MODAL -->
+    <div class="modal-overlay" id="card-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Student ID Card</h3>
+                <button class="modal-close-btn" id="modal-close-icon">&times;</button>
+            </div>
+            <div class="modal-body">
+                <!-- Render copy of the card inside -->
+                <div class="id-card-wrapper" id="modal-card-render-target"></div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="modal-btn-close">Close</button>
+                <button class="btn btn-primary" id="modal-btn-print">
+                    <i data-lucide="printer" style="width: 16px; height: 16px;"></i> Print ID Card
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Print area that is only visible to the printer media stylesheet -->
+    <div id="print-card-area"></div>
+
+</body>
+</html>
